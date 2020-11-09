@@ -58,6 +58,7 @@ export default {
 <style lang="scss">
 .user-card {
   margin: 0rem;
+  user-select: none;
   // display: inline-block;
 }
 .fade-enter-active,

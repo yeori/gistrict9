@@ -68,6 +68,7 @@ export default {
     padding-bottom: 6px;
   }
 }
+/*
 .card-body:hover::after {
   display: block;
   height: 100%;
@@ -77,4 +78,5 @@ export default {
   position: absolute;
   left: -16px;
 }
+*/
 </style>
