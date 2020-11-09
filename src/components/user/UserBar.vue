@@ -1,15 +1,18 @@
 <template>
   <article>
-    <div class="card-body">
+    <div class="card-body" @click="$emit('user-clicked', user, 'card')">
       <div class="img-holder">
         <img
           class="avatar"
           :src="user.avatar_url"
           :alt="user.login"
-          @click="$emit('user-clicked', user, 'avatar')"
+          @click.stop="$emit('user-clicked', user, 'avatar')"
         />
       </div>
-      <span class="desc" @click="() => $emit('user-clicked', user, 'login')">
+      <span
+        class="desc"
+        @click.stop="() => $emit('user-clicked', user, 'login')"
+      >
         {{ user.login }}
       </span>
     </div>
@@ -39,8 +42,8 @@ export default {
     background-color: #eeeeee;
     .img-holder {
       .avatar {
-        width: 56px;
-        height: 56px;
+        width: 44px;
+        height: 44px;
       }
     }
   }
