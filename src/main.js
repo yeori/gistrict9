@@ -6,5 +6,3 @@ createApp(App)
   .use(store)
   .use(router)
   .mount('#app')
-
-// app.config.devtools = true;
