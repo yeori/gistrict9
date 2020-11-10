@@ -1,7 +1,7 @@
 <template>
-  <div class="user-card">
+  <div v-if="page" class="user-card">
     <UserBar
-      v-for="user in users"
+      v-for="user in page.users"
       :key="user.id"
       :user="user"
       @user-clicked="showUser"
@@ -18,10 +18,9 @@
 
 <script>
 import { onMounted, ref } from 'vue'
+import { mapGetters, useStore } from 'vuex'
 import UserBar from '@/components/user/UserBar.vue'
 import UserPopup from '@/components/user/UserPopup.vue'
-
-const ENTRY_POINT = 'https://api.github.com'
 
 export default {
   components: {
@@ -29,28 +28,23 @@ export default {
     UserPopup
   },
   setup() {
-    const users = ref([])
+    const store = useStore()
     const activeUser = ref(null)
-    const loadUsers = lastUser => {
-      const id = lastUser ? '?since=' + lastUser.id : ''
-      const url = `${ENTRY_POINT}/users${id}`
-      fetch(url)
-        .then(res => res.json())
-        .then(newUsers => {
-          console.log(newUsers)
-          users.value.push(...newUsers)
-          // setLastUser(users[users.lenth - 1]);
-        })
-    }
     const showUser = user => {
       activeUser.value = user
     }
-    onMounted(() => loadUsers())
+    onMounted(() =>
+      store.dispatch('gitStore/loadUsers', { lastUser: null, pageShow: true })
+    )
     return {
-      users,
       activeUser,
       showUser
     }
+  },
+  computed: {
+    ...mapGetters({
+      page: 'gitStore/currentPage'
+    })
   }
 }
 </script>

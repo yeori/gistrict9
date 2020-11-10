@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
+import gitStore from './modules/git-store'
 
 export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+  strict: true,
+  modules: {
+    gitStore
+  }
 })
