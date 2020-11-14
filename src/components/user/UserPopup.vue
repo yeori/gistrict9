@@ -32,7 +32,7 @@ export default {
       fetch(url)
         .then(res => res.json())
         .then(userDetails => {
-          console.log(userDetails)
+          // console.log(userDetails)
           detail.value = userDetails
         })
     }

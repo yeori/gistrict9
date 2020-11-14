@@ -3,7 +3,7 @@
     <button :class="{ disabled: isFirstPage }">
       <i class="fas fa-arrow-left"></i>
     </button>
-    <div class="pgn-wrapper">
+    <div class="pgn-wrapper" @wheel.prevent.stop="pageScroll">
       <ul class="pgn" ref="pgbox">
         <li
           class="page"
@@ -59,7 +59,6 @@ export default {
       return users[users.length - 1]
     }
     const pageClicked = pageIndex => {
-      console.log('[pg]', pageIndex)
       pgn.setPage(pageIndex)
       // pgnumEl.value = e.currentTarget
       // console.log('done')
@@ -73,11 +72,28 @@ export default {
         pageShow: true
       })
     }
+    const pageScroll = e => {
+      const { deltaY } = e
+      const el = e.target.closest('.pgn-wrapper')
+      const { scrollLeft, offsetWidth, scrollWidth } = el
+      if (offsetWidth >= scrollWidth) {
+        return
+      }
+      if (deltaY > 0 && scrollLeft + offsetWidth === scrollWidth) {
+        return
+      }
+      if (deltaY < 0 && scrollLeft === 0) {
+        return
+      }
+      el.scrollBy({ top: 0, left: deltaY / 2 })
+      // console.log(deltaY, el.scrollLeft, el.offsetWidth, el.scrollWidth)
+    }
     return {
       ...pgn,
       nextPage: () => {},
       loadMorePage,
-      pageClicked
+      pageClicked,
+      pageScroll
     }
   }
 }
